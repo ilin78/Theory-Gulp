@@ -15,28 +15,33 @@ let path = {
         html: [ source_folder + "/*.html ", "!" + source_folder + "/_*.html " ],
         css: source_folder + "/scss/style.scss",
         js: source_folder + "/js/script.js ",
-        img: source_folder + "/img/**/*.{jpg, png, svg, gif, ico, webp}",
+        img: source_folder + "/img/*.{jpg, png, svg, gif, ico, webp}",
         fonts: source_folder + "/fonts/*.ttf"
     },
     watch: {
         html: source_folder + "/**/*.html",
         css: source_folder + "/scss/**/*.scss",
         js: source_folder + "/js/**/*.js ",
-        img: source_folder + "/img/**/*.{jpg, png, svg, gif, ico, webp}"
+        img: source_folder + "/img/*.{jpg, png, svg, gif, ico, webp}"
     },
     clean: "./" + project_folder + "/"
 }
 
-let { src, dest } = require('gulp'),
-     gulp = require('gulp'),
-     browsersync = require("browser-sync").create(),
-     fileinclude = require("gulp-file-include"),
-     del = require("del"),
-     scss = require("gulp-sass"),
-     autoprefixer = require("gulp-autoprefixer"),
-     group_media =  require("gulp-group-css-media-queries"),
-     clean_css = require("gulp-clean-css"),
-     rename = require("gulp-rename"); 
+let { src, dest }   = require('gulp'),
+     gulp           = require('gulp'),
+     browsersync    = require("browser-sync").create(),
+     fileinclude    = require("gulp-file-include"),
+     del            = require("del"),
+     scss           = require("gulp-sass"),
+     autoprefixer   = require("gulp-autoprefixer"),
+     group_media    = require("gulp-group-css-media-queries"),
+     clean_css      = require("gulp-clean-css"),
+     rename         = require("gulp-rename"),
+     uglify         = require("gulp-uglify-es").default,
+     imagemin       = require('gulp-imagemin'),
+     webp           = require('gulp-webp'),
+     webhtml        = require('gulp-webp-html')
+    //  webpcss        = require('gulp-webpcss');
 
 function browserSync(params) {
     browsersync.init({
@@ -48,8 +53,10 @@ function browserSync(params) {
     })
 }
 
+// Обработка HTML
 function html() {
     return src(path.src.html)
+    .pipe(webhtml())
     .pipe(fileinclude())
     .pipe(dest(path.build.html))
     .pipe(browsersync.stream())
@@ -72,6 +79,9 @@ function css() {
             cascade: true
         })
     )
+    // .pipe(
+    //     webpcss()
+    // )
     .pipe(dest(path.build.css)) // перед переименовыванием выгружаем файл отдельно
     .pipe(clean_css())
     .pipe(
@@ -82,21 +92,62 @@ function css() {
     .pipe(dest(path.build.css))
     .pipe(browsersync.stream())
 }
+// Обработка JS
+function js() {
+    return src(path.src.js)
+    .pipe(fileinclude())        // собирать в один файл все js скрипты
+    .pipe(dest(path.build.js))  // выгрузка файла *.js
+    .pipe(
+        uglify())               // сжатие
+    .pipe(
+        rename({
+            extname: ".min.js"  // переименовывание
+        })
+    )
+    .pipe(dest(path.build.js))  // выгрузка сжатого файла
+    .pipe(browsersync.stream())
+}
 
-// Подключение внешних файлов и обновление
+// Обработка IMAGES
+function images() {
+    return src(path.src.img)    // обращение к исходникам
+    .pipe(  
+        webp({                  // сохранение в формат webp
+            quality: 70         // качество изображения
+        })
+    )
+    .pipe(dest(path.build.img)) // выгружаем формат webp 
+    .pipe(src(path.src.img))    // снова обращение к исходникам
+    .pipe(
+        imagemin({              // сжатие картинки и настройки
+            progressive: true,
+            svgoPlugins: [{ removeViewBox: false }],
+            interlaced: true,       // работа с другими форматами изображений
+            optimizationLevel: 3    // 0 до 7 (как сильно сжать изображение)
+        })
+    )  
+    .pipe(dest(path.build.img))
+    .pipe(browsersync.stream())
+}
+
+// Подключение внешних файлов и отслеживание
 function watchFiles(params) {
     gulp.watch([path.watch.html], html)
     gulp.watch([path.watch.css], css)
+    gulp.watch([path.watch.js], js)
+    gulp.watch([path.watch.img], images)
 }
 
 // Очистка от лишних фалов в папке dist
 function clean (params) {
     return del(path.clean)
 }
-
-let build = gulp.series(clean, gulp.parallel(css, html))
+  
+let build = gulp.series(clean, gulp.parallel(js, css, html))    // процесс выполнения
 let watch = gulp.parallel(build, watchFiles, browserSync)
 
+exports.images = images
+exports.js = js
 exports.css = css
 exports.html = html
 exports.build = build

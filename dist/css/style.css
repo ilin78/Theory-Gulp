@@ -1,5 +1,26 @@
 body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   font-size: 10px;
   color: white;
   background-color: #ff6565;
+}
+
+span {
+  font-size: 20px;
+}
+
+div {
+  font-size: 30px;
+}
+
+@media (max-width: 767px) {
+  span {
+    font-size: 15px;
+  }
+
+  div {
+    font-size: 20px;
+  }
 }

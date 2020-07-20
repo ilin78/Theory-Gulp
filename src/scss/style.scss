@@ -1,5 +1,20 @@
 body {
+    display: flex;
     font-size: 10px;
     color: white;
     background-color: rgb(255, 101, 101);
+}
+
+span{
+    font-size: 20px;
+    @media (max-width: 767px){
+        font-size: 15px;
+    }
+}
+
+div {
+    font-size: 30px;
+    @media (max-width: 767px) {
+        font-size: 20px;
+    }
 }

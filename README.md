@@ -12,7 +12,7 @@
 ### GULP GET STARTED
 https://gulpjs.com/docs/en/getting-started/quick-start
 
-В этоим проекте
+В этом проекте
 
 Gulp настройка установка плагины. 
  Пошаговая инструкция по настройке сборки Gulp 4 для верстки сайтов
@@ -35,5 +35,32 @@ https://www.npmjs.com/package/gulp-file-include
 // Чистит и сжимает файл css
 - npm i --save-dev gulp-clean-css
 
-// для вывода двух фалов css
+// для вывода двух фалов в директорию dist
 - npm i --save-dev gulp-rename
+
+// для сжатия и оптимизации js файлов
+npm i --save-dev gulp-uglify-es
+
+// сжать картинку без потери качества
+npm i --save-dev gulp-imagemin
+
+// форматирование в webp
+npm i --save-dev gulp-webp
+
+// интегрирование webp в html
+npm i --save-dev gulp-webp-html
+
+
+```html
+<picture>
+    <source srcset="img/image.webp" type="image/webp">
+    <img src="img/image.jpg" alt=""> 
+</picture>
+```
+Позволяет заменить эту запись в одну строку
+
+```html
+    <img src="img/image.jpg" alt=""> 
+```
+// для работы со стилями webp
+npm i --save-dev gulp-webpcss
