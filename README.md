@@ -64,3 +64,7 @@ npm i --save-dev gulp-webp-html
 ```
 // для работы со стилями webp
 npm i --save-dev gulp-webp-css
+
+
+
+Author: Ilyin Oleg
