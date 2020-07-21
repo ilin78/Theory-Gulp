@@ -63,4 +63,4 @@ npm i --save-dev gulp-webp-html
     <img src="img/image.jpg" alt=""> 
 ```
 // для работы со стилями webp
-npm i --save-dev gulp-webpcss
+npm i --save-dev gulp-webp-css

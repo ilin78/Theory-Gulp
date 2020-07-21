@@ -1,1 +1,1 @@
-body{display:-webkit-box;display:-ms-flexbox;display:flex;font-size:10px;color:#fff;background-color:#ff6565}span{font-size:20px}div{font-size:30px}@media (max-width:767px){span{font-size:15px}div{font-size:20px}}
+body{display:-webkit-box;display:-ms-flexbox;display:flex;font-size:10px;color:#fff;background-color:#ff6565}span{font-size:20px}div{font-size:30px}div{background:url(../img/image.jpg)}@media (max-width:767px){span{font-size:15px}div{font-size:20px}}@supports (-webkit-appearance:none){div{background:url(../img/image.webp)}}

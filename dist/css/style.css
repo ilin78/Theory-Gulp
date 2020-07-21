@@ -15,6 +15,10 @@ div {
   font-size: 30px;
 }
 
+div {
+  background: url("../img/image.jpg");
+}
+
 @media (max-width: 767px) {
   span {
     font-size: 15px;
@@ -23,4 +27,15 @@ div {
   div {
     font-size: 20px;
   }
+}
+@supports (-webkit-appearance:none){
+div{background:url("../img/image.webp")}
+}
+
+ @media (max-width: 767px){
+
+@supports (-webkit-appearance:none){
+
+}
+
 }

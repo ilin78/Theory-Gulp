@@ -41,7 +41,7 @@ let { src, dest }   = require('gulp'),
      imagemin       = require('gulp-imagemin'),
      webp           = require('gulp-webp'),
      webhtml        = require('gulp-webp-html')
-    //  webpcss        = require('gulp-webpcss');
+     webpcss        = require('gulp-webp-css');
 
 function browserSync(params) {
     browsersync.init({
@@ -79,9 +79,9 @@ function css() {
             cascade: true
         })
     )
-    // .pipe(
-    //     webpcss()
-    // )
+    .pipe(
+        webpcss()
+    )
     .pipe(dest(path.build.css)) // перед переименовыванием выгружаем файл отдельно
     .pipe(clean_css())
     .pipe(
