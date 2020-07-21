@@ -67,4 +67,4 @@ npm i --save-dev gulp-webp-css
 
 
 
-Author: Ilyin Oleg
+Author: Ilin Oleg
