@@ -2,7 +2,7 @@ body {
     display: flex;
     font-size: 10px;
     color: white;
-    background-color: rgb(255, 101, 101);
+    background-color: rgb(0, 4, 252);
 }
 
 span {
@@ -19,6 +19,6 @@ div {
     }
 }
 
-// div {
-// background: url('../img/image.jpg');
-// }
+div {
+    background: url('../img/image.jpg') 0 0 no-repeat;
+}

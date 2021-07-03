@@ -40,7 +40,7 @@ let { src, dest }   = require('gulp'),
      uglify         = require("gulp-uglify-es").default,
      imagemin       = require('gulp-imagemin'),
      webp           = require('gulp-webp'),
-     webhtml        = require('gulp-webp-html'), 
+     webphtml        = require('gulp-webp-html'), 
      webpcss        = require('gulp-webp-css');
 
 function browserSync(params) {
@@ -56,7 +56,7 @@ function browserSync(params) {
 // Обработка HTML
 function html() {
     return src(path.src.html)
-    .pipe(webhtml())
+    .pipe(webphtml())
     .pipe(fileinclude())
     .pipe(dest(path.build.html))
     .pipe(browsersync.stream())
@@ -111,8 +111,7 @@ function js() {
 // Обработка IMAGES
 function images() {
     return src(path.src.img) 
-    
-    .pipe(fileinclude())        // собирать в один файл все js скрипты
+    // .pipe(fileinclude())        // собирать в один файл все js скрипты
     .pipe(  
         webp({                  // сохранение в формат webp
             quality: 70         // качество изображения
@@ -128,10 +127,8 @@ function images() {
             optimizationLevel: 3    // 0 до 7 (как сильно сжать изображение)
         })
     )  
-    
     .pipe(dest(path.build.img))
     .pipe(browsersync.stream())
-
 }
 
 // Подключение внешних файлов и отслеживание
